@@ -1,0 +1,5 @@
+Android studio: https://developer.android.com/studio
+Flutter widgets: https://www.fluttertemplates.dev/
+Flutter SDK: https://docs.flutter.dev/get-started/install/windows/mobile
+Visual Studio Code: https://code.visualstudio.com/download
+Flutter eksterni paketi: https://pub.dev/
