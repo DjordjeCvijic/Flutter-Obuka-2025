@@ -3,3 +3,5 @@ Flutter widgets: https://www.fluttertemplates.dev/
 Flutter SDK: https://docs.flutter.dev/get-started/install/windows/mobile
 Visual Studio Code: https://code.visualstudio.com/download
 Flutter eksterni paketi: https://pub.dev/
+Formatiranje datuma: https://onlyflutter.com/how-to-format-dates-and-times-in-flutter/ 
+Material komponente: https://docs.flutter.dev/ui/widgets/material
