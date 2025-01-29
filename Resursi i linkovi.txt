@@ -5,3 +5,7 @@ Visual Studio Code: https://code.visualstudio.com/download
 Flutter eksterni paketi: https://pub.dev/
 Formatiranje datuma: https://onlyflutter.com/how-to-format-dates-and-times-in-flutter/ 
 Material komponente: https://docs.flutter.dev/ui/widgets/material
+
+29.01.'25.
+Populaiton API: https://datausa.io/api/data?drilldowns=Nation&measures=Population
+Random joke API: http://www.official-joke-api.appspot.com/random_joke
