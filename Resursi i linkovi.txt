@@ -9,3 +9,5 @@ Material komponente: https://docs.flutter.dev/ui/widgets/material
 29.01.'25.
 Populaiton API: https://datausa.io/api/data?drilldowns=Nation&measures=Population
 Random joke API: http://www.official-joke-api.appspot.com/random_joke
+
+First figma design: https://www.figma.com/design/9xRvPjjwMgtNny8dgtM4WW/Course-EdTech-Mobile-App-(Community)-(Copy)?node-id=29-179&t=ZPN5tuIxBtf3exdO-0
