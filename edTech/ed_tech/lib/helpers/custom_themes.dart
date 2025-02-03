@@ -31,6 +31,30 @@ class CustomThemes {
           height: 48 / 40,
           color: CustomColors.textColor,
         ),
+        heading4: TextStyle(
+          fontSize: 24.0,
+          fontWeight: FontWeight.w500,
+          height: 32 / 24,
+          color: CustomColors.textColor,
+        ),
+        pMedium: TextStyle(
+          fontSize: 14.0,
+          fontWeight: FontWeight.w400,
+          height: 21 / 14,
+          color: CustomColors.textColor,
+        ),
+        buttonSmall: TextStyle(
+          fontSize: 14.0,
+          fontWeight: FontWeight.w500,
+          height: 16 / 14,
+          color: CustomColors.textColor,
+        ),
+        buttonMedium: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w500,
+          height: 18 / 16,
+          color: CustomColors.textColor,
+        ),
       ),
     );
 }
@@ -38,16 +62,28 @@ class CustomThemes {
 class OwnThemeFields {
   final TextStyle? heading1;
   final TextStyle? heading2;
+  final TextStyle? heading4;
+  final TextStyle? pMedium;
+  final TextStyle? buttonSmall;
+  final TextStyle? buttonMedium;
 
   const OwnThemeFields({
     required this.heading1,
     required this.heading2,
+    required this.heading4,
+    required this.pMedium,
+    required this.buttonSmall,
+    required this.buttonMedium,
   });
 
   factory OwnThemeFields.empty() {
     return const OwnThemeFields(
       heading1: TextStyle(),
       heading2: TextStyle(),
+      heading4: TextStyle(),
+      pMedium: TextStyle(),
+      buttonSmall: TextStyle(),
+      buttonMedium: TextStyle(),
     );
   }
 }
