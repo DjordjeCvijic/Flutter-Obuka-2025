@@ -19,6 +19,7 @@ class SplashScreen extends StatelessWidget {
                 "CodeFactory",
                 style: ownTheme(context).heading2,
               ),
+              CircularProgressIndicator()
             ],
           ),
         ),

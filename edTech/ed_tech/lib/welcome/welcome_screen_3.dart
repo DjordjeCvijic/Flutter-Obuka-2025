@@ -1,9 +1,10 @@
+import 'package:ed_tech/widgets/text_column.dart';
 import 'package:flutter/material.dart';
 
-import '../helpers/custom_colors.dart';
 import '../helpers/custom_images.dart';
 import '../helpers/custom_themes.dart';
-import '../widgets/ed_tech_button.dart';
+import '../login/login_screen.dart';
+import '../widgets/et_button.dart';
 import '../widgets/step_indicator/step_indicator.dart';
 
 class WelcomeScreen3 extends StatelessWidget {
@@ -21,7 +22,19 @@ class WelcomeScreen3 extends StatelessWidget {
 
           children: [
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                // Navigator.of(context).push(
+                //   MaterialPageRoute(
+                //     builder: (context) => LoginScreen(),
+                //   ),
+                // );
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                  (route) => false,
+                );
+              },
               child: Text(
                 "Skip",
                 style: ownTheme(context).buttonSmall,
@@ -34,30 +47,10 @@ class WelcomeScreen3 extends StatelessWidget {
                   Image.asset(CustomImages.welcome3Img),
                   Expanded(
                     child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          //column with text
-                          spacing: 8,
-                          children: [
-                            Text(
-                              "Improve your skills",
-                              style: ownTheme(context)
-                                  .heading4!
-                                  .copyWith(color: CustomColors.dark),
-                              textAlign: TextAlign.center,
-                            ),
-                            Text(
-                              "Quarantine is the perfect time to spend your day learning something new, from anywhere!",
-                              style: ownTheme(context)
-                                  .pMedium!
-                                  .copyWith(color: CustomColors.darkGrey),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                        child: TextColumn(
+                            titleText: "Improve your skills",
+                            descriptionText:
+                                "Quarantine is the perfect time to spend your day learning something new, from anywhere!")),
                   ),
                   StepIndicator(
                     currentIndex: 3,
@@ -65,11 +58,18 @@ class WelcomeScreen3 extends StatelessWidget {
                 ],
               ),
             ),
-            EdTechButton(
+            ETButton(
               topMargin: 0,
               bottomMargin: 24,
               buttonText: "Let’s Start",
-              onTapButton: () {},
+              onTapButton: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                  (route) => false,
+                );
+              },
             )
           ],
         ),
