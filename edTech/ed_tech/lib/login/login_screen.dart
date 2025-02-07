@@ -1,10 +1,14 @@
 import 'package:ed_tech/helpers/custom_colors.dart';
+import 'package:ed_tech/login/login_provider.dart';
+import 'package:ed_tech/sign_up/sign_up_provider.dart';
+import 'package:ed_tech/sign_up/sign_up_screen.dart';
 import 'package:ed_tech/widgets/et_button.dart';
 import 'package:ed_tech/widgets/text_column.dart';
 import 'package:ed_tech/widgets/input_fields/et_text_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 
 import '../helpers/custom_icons.dart';
 import '../helpers/custom_images.dart';
@@ -16,6 +20,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LoginProvider provider =
+        Provider.of<LoginProvider>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -42,9 +48,14 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
               Gap(16),
-              ETTextInputField(hintText: "Email"),
+              ETTextInputField(
+                textEditingController: provider.emailTextController,
+                hintText: "Email",
+              ),
               Gap(12),
-              ETPasswordInputField(),
+              ETPasswordInputField(
+                textEditingController: provider.passwordTextController,
+              ),
               TextButton(
                 onPressed: () {},
                 child: Text(
@@ -60,10 +71,21 @@ class LoginScreen extends StatelessWidget {
                 leftMargin: 16,
                 rightMargin: 16,
                 buttonText: "Log in",
-                onTapButton: () {},
+                onTapButton: () {
+                  provider.onLogIn(context: context);
+                },
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ChangeNotifierProvider(
+                        create: (context) => SignUpProvider(),
+                        child: SignUpScreen(),
+                      ),
+                    ),
+                  );
+                },
                 child: Text(
                   "Sign up",
                   style: ownTheme(context)

@@ -1,3 +1,4 @@
+import 'package:ed_tech/login/login_provider.dart';
 import 'package:ed_tech/login/login_screen.dart';
 import 'package:ed_tech/welcome/providers/et_placeholder_provider.dart';
 import 'package:ed_tech/welcome/splash_screen.dart';
@@ -18,7 +19,10 @@ class ETPlaceholder extends StatelessWidget {
           snapshot.connectionState == ConnectionState.waiting
               ? SplashScreen()
               : (snapshot.data == NextScreenEnum.loginScreen
-                  ? LoginScreen()
+                  ? ChangeNotifierProvider(
+                      create: (context) => LoginProvider(),
+                      child: LoginScreen(),
+                    )
                   : WelcomeScreen1()),
     );
   }

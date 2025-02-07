@@ -6,7 +6,11 @@ import '../../helpers/custom_colors.dart';
 import '../../helpers/custom_themes.dart';
 
 class ETPasswordInputField extends StatefulWidget {
-  const ETPasswordInputField({super.key});
+  final TextEditingController textEditingController;
+  const ETPasswordInputField({
+    super.key,
+    required this.textEditingController,
+  });
 
   @override
   State<ETPasswordInputField> createState() => _ETPasswordInputFieldState();
@@ -34,6 +38,7 @@ class _ETPasswordInputFieldState extends State<ETPasswordInputField> {
       margin: EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
         obscureText: !isVisible,
+        controller: widget.textEditingController,
         decoration: InputDecoration(
           labelText: "Password",
           labelStyle: ownTheme(context).pMedium,

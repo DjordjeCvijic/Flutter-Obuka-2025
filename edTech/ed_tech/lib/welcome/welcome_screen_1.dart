@@ -3,7 +3,9 @@ import 'package:ed_tech/helpers/custom_themes.dart';
 import 'package:ed_tech/welcome/welcome_screen_2.dart';
 import 'package:ed_tech/widgets/step_indicator/step_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../login/login_provider.dart';
 import '../login/login_screen.dart';
 import '../widgets/et_button.dart';
 import '../widgets/text_column.dart';
@@ -31,7 +33,10 @@ class WelcomeScreen1 extends StatelessWidget {
                 // );
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
+                    builder: (context) => ChangeNotifierProvider(
+                      create: (context) => LoginProvider(),
+                      child: LoginScreen(),
+                    ),
                   ),
                   (route) => false,
                 );

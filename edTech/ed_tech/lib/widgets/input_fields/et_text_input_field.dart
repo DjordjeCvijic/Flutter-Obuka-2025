@@ -3,10 +3,12 @@ import 'package:ed_tech/helpers/custom_themes.dart';
 import 'package:flutter/material.dart';
 
 class ETTextInputField extends StatelessWidget {
+  final TextEditingController textEditingController;
   final String hintText;
   const ETTextInputField({
     super.key,
     required this.hintText,
+    required this.textEditingController,
   });
 
   @override
@@ -20,6 +22,7 @@ class ETTextInputField extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
+        controller: textEditingController,
         decoration: InputDecoration(
           labelText: hintText,
           labelStyle: ownTheme(context).pMedium,
