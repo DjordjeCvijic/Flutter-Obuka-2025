@@ -1,5 +1,6 @@
 import 'package:ed_tech/login/login_provider.dart';
 import 'package:ed_tech/login/login_screen.dart';
+import 'package:ed_tech/main_navigation/main_navigation.dart';
 import 'package:ed_tech/welcome/providers/et_placeholder_provider.dart';
 import 'package:ed_tech/welcome/splash_screen.dart';
 import 'package:ed_tech/welcome/welcome_screen_1.dart';
@@ -23,7 +24,9 @@ class ETPlaceholder extends StatelessWidget {
                       create: (context) => LoginProvider(),
                       child: LoginScreen(),
                     )
-                  : WelcomeScreen1()),
+                  : (snapshot.data == NextScreenEnum.welcomeScreen
+                      ? WelcomeScreen1()
+                      : MainNavigation())),
     );
   }
 }

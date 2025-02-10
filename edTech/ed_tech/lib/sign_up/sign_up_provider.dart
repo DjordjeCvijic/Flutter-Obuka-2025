@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
+import '../services/user_service.dart';
+
 class SignUpProvider extends ChangeNotifier {
   final TextEditingController nameTextController = TextEditingController();
   final TextEditingController emailTextController = TextEditingController();
   final TextEditingController passwordTextController = TextEditingController();
 
-  Future<void> onSignUp({required BuildContext context}) async {
+  Future<bool> onSignUp({required BuildContext context}) async {
     if (nameTextController.text.isEmpty ||
         emailTextController.text.isEmpty ||
         passwordTextController.text.isEmpty) {
@@ -23,27 +25,37 @@ class SignUpProvider extends ChangeNotifier {
       ETScaffoldMessenger.showMessage(
           context: context, messageText: "Validation error");
     } else {
-      UserModel user = UserModel(
-        name: nameTextController.text,
-        email: emailTextController.text,
-        password: passwordTextController.text,
-      );
-      String url = GlobalConst.firebaseURL + GlobalConst.userNode;
+      List<UserModel> userList = await UserService.fetchUsersFromFirebase();
 
-      Response response = await http.post(
-        Uri.parse(url),
-        body: jsonEncode(
-          user.toJson(),
-        ),
-      );
-
-      if (response.statusCode == 200) {
+      if (userList.any((user) => user.email == emailTextController.text)) {
         ETScaffoldMessenger.showMessage(
-            context: context, messageText: "User date saved");
+            context: context, messageText: "Credentials error");
       } else {
-        ETScaffoldMessenger.showMessage(context: context, messageText: "ERROR");
-        log(response.body);
+        UserModel user = UserModel(
+          name: nameTextController.text,
+          email: emailTextController.text,
+          password: passwordTextController.text,
+        );
+        String url = GlobalConst.firebaseURL + GlobalConst.userNode;
+
+        Response response = await http.post(
+          Uri.parse(url),
+          body: jsonEncode(
+            user.toJson(),
+          ),
+        );
+
+        if (response.statusCode == 200) {
+          ETScaffoldMessenger.showMessage(
+              context: context, messageText: "User date saved");
+          return true;
+        } else {
+          ETScaffoldMessenger.showMessage(
+              context: context, messageText: "ERROR");
+          log(response.body);
+        }
       }
     }
+    return false;
   }
 }

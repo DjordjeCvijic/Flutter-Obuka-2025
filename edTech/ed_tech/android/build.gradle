@@ -3,6 +3,7 @@ allprojects {
         google()
         mavenCentral()
     }
+
 }
 
 rootProject.buildDir = "../build"
@@ -16,3 +17,22 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+buildscript {
+    ext.kotlin_version = '1.8.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.1'
+    }
+}
+// dependencies {
+//     classpath 'com.android.tools.build:gradle:7.3.0'
+//     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//     classpath 'com.google.gms:google-services:4.3.3'
+// }

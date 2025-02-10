@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "400249875404",
+    "firebase_url": "https://ed-tech-a158c-default-rtdb.firebaseio.com",
+    "project_id": "ed-tech-a158c",
+    "storage_bucket": "ed-tech-a158c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400249875404:android:24b6ceea9949b20f10cb69",
+        "android_client_info": {
+          "package_name": "com.example.ed_tech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "400249875404-thul5i162irc2mpipiuqh0cfp478bqfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ed_tech",
+            "certificate_hash": "c562ce6c364dd8ebb847d2a1698854d935e66c50"
+          }
+        },
+        {
+          "client_id": "400249875404-i5c9phc1uaqq8on46ti0m9bc6f14u3lu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq1E9w0gw-nzW9myF3gyAJJtiODOv7Jxc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "400249875404-i5c9phc1uaqq8on46ti0m9bc6f14u3lu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

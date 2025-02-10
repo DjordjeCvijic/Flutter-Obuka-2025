@@ -56,8 +56,11 @@ class SignUpScreen extends StatelessWidget {
                 leftMargin: 16,
                 rightMargin: 16,
                 buttonText: "Sign up",
-                onTapButton: () {
-                  provider.onSignUp(context: context);
+                onTapButton: () async {
+                  bool success = await provider.onSignUp(context: context);
+                  if (success) {
+                    Navigator.of(context).pop();
+                  }
                 },
               ),
               TextButton(
