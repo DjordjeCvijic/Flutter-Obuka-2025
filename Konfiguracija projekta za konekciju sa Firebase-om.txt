@@ -1,0 +1,41 @@
+- Project level build.gradle:
+1. Dodati:
+buildscript {
+    ext.kotlin_version = '1.8.10'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.google.gms:google-services:4.4.1'
+    }
+}
+
+
+- App level build.gradle:
+
+1. U defaultConfig izmijeniti minSdk:
+	minSdk = 23
+2. Dodati :
+	dependencies {
+    	implementation platform('com.google.firebase:firebase-bom:32.7.4')
+    	implementation 'com.google.firebase:firebase-analytics'
+	}
+
+- settings.gradle:
+
+1. plugins treba da izgleda ovako:
+ plugins {
+    id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+    id "com.android.application" version "8.3.2" apply false
+    id "org.jetbrains.kotlin.android" version "2.0.20" apply false
+}
+
+-gradle-wrapper.properties:
+	
+1. Izmijeniti distributionUrl:
+	distributionUrl=https\://services.gradle.org/distributions/gradle-8.10.2-all.zip
+
