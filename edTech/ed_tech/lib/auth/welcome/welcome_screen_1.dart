@@ -1,14 +1,14 @@
 import 'package:ed_tech/helpers/custom_images.dart';
 import 'package:ed_tech/helpers/custom_themes.dart';
-import 'package:ed_tech/welcome/welcome_screen_2.dart';
+import 'package:ed_tech/auth/welcome/welcome_screen_2.dart';
 import 'package:ed_tech/widgets/step_indicator/step_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../login/login_provider.dart';
 import '../login/login_screen.dart';
-import '../widgets/et_button.dart';
-import '../widgets/text_column.dart';
+import '../../widgets/et_button.dart';
+import '../../widgets/text_column.dart';
 
 class WelcomeScreen1 extends StatelessWidget {
   const WelcomeScreen1({super.key});

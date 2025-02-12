@@ -8,4 +8,10 @@ class CustomIcons {
   static String visibleIcon = "assets/icons/visible_icon.svg";
   static const String leftArrowIcon = "assets/icons/left_arrow_icon.svg";
   static const String notificationIcon = "assets/icons/notification_icon.svg";
+
+  static const String coursesIcon = "assets/icons/courses_icon.svg";
+
+  static const String profileIcon = "assets/icons/profile_icon.svg";
+
+  static const String settingsIcon = "assets/icons/settings_icon.svg";
 }

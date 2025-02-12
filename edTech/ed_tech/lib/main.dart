@@ -1,10 +1,10 @@
 import 'package:ed_tech/helpers/custom_themes.dart';
-import 'package:ed_tech/welcome/providers/et_placeholder_provider.dart';
+import 'package:ed_tech/auth/welcome/providers/et_placeholder_provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'welcome/et_placeholder.dart';
+import 'auth/welcome/et_placeholder.dart';
 
 void main() {
   runApp(const MyApp());

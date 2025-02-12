@@ -1,8 +1,8 @@
 import 'package:ed_tech/main_navigation/main_navigation.dart';
 import 'package:ed_tech/helpers/custom_colors.dart';
-import 'package:ed_tech/login/login_provider.dart';
-import 'package:ed_tech/sign_up/sign_up_provider.dart';
-import 'package:ed_tech/sign_up/sign_up_screen.dart';
+import 'package:ed_tech/auth/login/login_provider.dart';
+import 'package:ed_tech/auth/sign_up/sign_up_provider.dart';
+import 'package:ed_tech/auth/sign_up/sign_up_screen.dart';
 import 'package:ed_tech/widgets/et_button.dart';
 import 'package:ed_tech/widgets/text_column.dart';
 import 'package:ed_tech/widgets/input_fields/et_text_input_field.dart';
@@ -11,10 +11,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../helpers/custom_icons.dart';
-import '../helpers/custom_images.dart';
-import '../helpers/custom_themes.dart';
-import '../widgets/input_fields/et_password_input_field.dart';
+import '../../helpers/custom_icons.dart';
+import '../../helpers/custom_images.dart';
+import '../../helpers/custom_themes.dart';
+import '../../main_navigation/main_navigation_provider.dart';
+import '../../widgets/input_fields/et_password_input_field.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -46,8 +47,19 @@ class LoginScreen extends StatelessWidget {
                   SvgPicture.asset(CustomIcons.facebookLoginIcon),
                   SvgPicture.asset(CustomIcons.instagramLoginIcon),
                   InkWell(
-                    onTap: () {
-                      provider.googleSignIn();
+                    onTap: () async {
+                      bool googleSignInSuccess =
+                          await provider.googleSignIn(context: context);
+                      if (googleSignInSuccess) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => ChangeNotifierProvider(
+                              create: (context) => MainNavigationProvider(),
+                              child: MainNavigation(),
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: SvgPicture.asset(CustomIcons.googleLoginIcon),
                   ),
@@ -82,7 +94,10 @@ class LoginScreen extends StatelessWidget {
                   if (loginSuccess) {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => MainNavigation(),
+                        builder: (context) => ChangeNotifierProvider(
+                          create: (context) => MainNavigationProvider(),
+                          child: MainNavigation(),
+                        ),
                       ),
                     );
                   }

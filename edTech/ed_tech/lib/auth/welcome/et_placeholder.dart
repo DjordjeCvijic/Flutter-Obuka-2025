@@ -1,9 +1,10 @@
-import 'package:ed_tech/login/login_provider.dart';
-import 'package:ed_tech/login/login_screen.dart';
+import 'package:ed_tech/auth/login/login_provider.dart';
+import 'package:ed_tech/auth/login/login_screen.dart';
 import 'package:ed_tech/main_navigation/main_navigation.dart';
-import 'package:ed_tech/welcome/providers/et_placeholder_provider.dart';
-import 'package:ed_tech/welcome/splash_screen.dart';
-import 'package:ed_tech/welcome/welcome_screen_1.dart';
+import 'package:ed_tech/auth/welcome/providers/et_placeholder_provider.dart';
+import 'package:ed_tech/auth/welcome/splash_screen.dart';
+import 'package:ed_tech/auth/welcome/welcome_screen_1.dart';
+import 'package:ed_tech/main_navigation/main_navigation_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,10 @@ class ETPlaceholder extends StatelessWidget {
                     )
                   : (snapshot.data == NextScreenEnum.welcomeScreen
                       ? WelcomeScreen1()
-                      : MainNavigation())),
+                      : ChangeNotifierProvider(
+                          create: (context) => MainNavigationProvider(),
+                          child: MainNavigation(),
+                        ))),
     );
   }
 }

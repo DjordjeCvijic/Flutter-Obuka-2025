@@ -5,6 +5,7 @@ import 'package:ed_tech/models/user_model.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../helpers/global_const.dart';
 
 class UserService {
@@ -24,5 +25,22 @@ class UserService {
       });
     }
     return userList;
+  }
+
+  static Future<bool> saveUserData({required UserModel userData}) async {
+    String url = GlobalConst.firebaseURL + GlobalConst.userNode;
+    Response response = await http.post(
+      Uri.parse(url),
+      body: jsonEncode(
+        userData.toJson(),
+      ),
+    );
+
+    return response.statusCode == 200;
+  }
+
+  static void setUserLoggedIn(bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(SharedPreferencesKeys.loggedIn, value);
   }
 }

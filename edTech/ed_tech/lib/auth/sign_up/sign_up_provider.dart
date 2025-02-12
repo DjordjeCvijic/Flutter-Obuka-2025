@@ -1,14 +1,9 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:ed_tech/helpers/et_scaffold_messenger.dart';
-import 'package:ed_tech/helpers/global_const.dart';
+
 import 'package:ed_tech/models/user_model.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 
-import '../services/user_service.dart';
+import '../../services/user_service.dart';
 
 class SignUpProvider extends ChangeNotifier {
   final TextEditingController nameTextController = TextEditingController();
@@ -36,23 +31,16 @@ class SignUpProvider extends ChangeNotifier {
           email: emailTextController.text,
           password: passwordTextController.text,
         );
-        String url = GlobalConst.firebaseURL + GlobalConst.userNode;
 
-        Response response = await http.post(
-          Uri.parse(url),
-          body: jsonEncode(
-            user.toJson(),
-          ),
-        );
+        bool success = await UserService.saveUserData(userData: user);
 
-        if (response.statusCode == 200) {
+        if (success) {
           ETScaffoldMessenger.showMessage(
               context: context, messageText: "User date saved");
           return true;
         } else {
           ETScaffoldMessenger.showMessage(
               context: context, messageText: "ERROR");
-          log(response.body);
         }
       }
     }

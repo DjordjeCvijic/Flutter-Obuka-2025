@@ -2,12 +2,12 @@ import 'package:ed_tech/widgets/text_column.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../helpers/custom_images.dart';
-import '../helpers/custom_themes.dart';
+import '../../helpers/custom_images.dart';
+import '../../helpers/custom_themes.dart';
 import '../login/login_provider.dart';
 import '../login/login_screen.dart';
-import '../widgets/et_button.dart';
-import '../widgets/step_indicator/step_indicator.dart';
+import '../../widgets/et_button.dart';
+import '../../widgets/step_indicator/step_indicator.dart';
 
 class WelcomeScreen3 extends StatelessWidget {
   const WelcomeScreen3({super.key});

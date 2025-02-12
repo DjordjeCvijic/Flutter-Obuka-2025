@@ -1,5 +1,5 @@
 import 'package:ed_tech/helpers/custom_images.dart';
-import 'package:ed_tech/sign_up/sign_up_provider.dart';
+import 'package:ed_tech/auth/sign_up/sign_up_provider.dart';
 import 'package:ed_tech/widgets/et_button.dart';
 import 'package:ed_tech/widgets/input_fields/et_password_input_field.dart';
 import 'package:ed_tech/widgets/input_fields/et_text_input_field.dart';
@@ -7,9 +7,9 @@ import 'package:ed_tech/widgets/text_column.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../helpers/custom_colors.dart';
-import '../helpers/custom_themes.dart';
-import '../widgets/et_circle_button.dart';
+import '../../helpers/custom_colors.dart';
+import '../../helpers/custom_themes.dart';
+import '../../widgets/et_circle_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

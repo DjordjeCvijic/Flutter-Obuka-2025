@@ -3,13 +3,8 @@ import 'dart:developer';
 import 'package:ed_tech/helpers/et_scaffold_messenger.dart';
 import 'package:ed_tech/models/user_model.dart';
 import 'package:ed_tech/services/user_service.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../helpers/global_const.dart';
 
 class LoginProvider extends ChangeNotifier {
   final TextEditingController emailTextController = TextEditingController();
@@ -30,9 +25,8 @@ class LoginProvider extends ChangeNotifier {
               (userElement) => userElement.email == emailTextController.text);
           if (user.password == passwordTextController.text) {
             //Login success
-            final SharedPreferences prefs =
-                await SharedPreferences.getInstance();
-            prefs.setBool(SharedPreferencesKeys.loggedIn, true);
+            UserService.setUserLoggedIn(true);
+
             return true;
           } else {
             ETScaffoldMessenger.showMessage(
@@ -51,21 +45,57 @@ class LoginProvider extends ChangeNotifier {
     return false;
   }
 
-  void googleSignIn() async {
+  Future<bool> googleSignIn({required BuildContext context}) async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser != null) {
+        UserModel userModel = UserModel(
+          email: googleUser.email,
+          name: googleUser.displayName ?? "",
+          password: googleUser.id,
+        );
+        GoogleSignIn().signOut();
 
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+        List<UserModel> users = await UserService.fetchUsersFromFirebase();
 
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      log("PODACI SA GOOGLE-a${googleUser!.email}");
+        if (users.any((user) => user.email == userModel.email)) {
+          //User already exists in database
+          bool checkResponse = _checkUserPassword(users, userModel);
+          if (checkResponse) {
+            UserService.setUserLoggedIn(true);
+          }
+          return checkResponse;
+        } else {
+          return _saveUserData(userModel: userModel, context: context);
+        }
+      } else {
+        ETScaffoldMessenger.showMessage(
+            context: context, messageText: "Please, select user");
+      }
     } on Exception catch (e) {
-      // TODO
-      print('exception->$e');
+      log('exception->$e');
     }
+    return false;
+  }
+
+  bool _checkUserPassword(List<UserModel> users, UserModel userModel) {
+    UserModel userInDatabase =
+        users.firstWhere((user) => user.email == userModel.email);
+
+    return userInDatabase.password == userModel.password;
+  }
+
+  Future<bool> _saveUserData(
+      {required UserModel userModel, required BuildContext context}) async {
+    bool success = await UserService.saveUserData(userData: userModel);
+
+    if (success) {
+      ETScaffoldMessenger.showMessage(
+          context: context, messageText: "User date saved");
+    } else {
+      ETScaffoldMessenger.showMessage(context: context, messageText: "ERROR");
+    }
+
+    return success;
   }
 }

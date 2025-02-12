@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../helpers/global_const.dart';
+import '../../../helpers/global_const.dart';
 
 enum NextScreenEnum { welcomeScreen, loginScreen, mainNavigation }
 
