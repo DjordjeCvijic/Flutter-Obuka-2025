@@ -14,4 +14,12 @@ class CustomIcons {
   static const String profileIcon = "assets/icons/profile_icon.svg";
 
   static const String settingsIcon = "assets/icons/settings_icon.svg";
+  static const String circleNotificationIcon =
+      "assets/icons/circle_notification_icon.svg";
+  static const String rightArrowIcon = "assets/icons/right_arrow_icon.svg";
+  static const String circleProfileIcon =
+      "assets/icons/circle_profile_icon.svg";
+  static const String circleEmailIcon = "assets/icons/circle_email_icon.svg";
+  static const String circlePasswordIcon =
+      "assets/icons/circle_password_icon.svg";
 }

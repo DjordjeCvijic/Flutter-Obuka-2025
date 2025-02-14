@@ -1,4 +1,6 @@
 import 'package:ed_tech/main_navigation/main_navigation_provider.dart';
+import 'package:ed_tech/main_navigation/profile/profile_screen.dart';
+import 'package:ed_tech/main_navigation/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +18,8 @@ class MainNavigation extends StatelessWidget {
 
     List<Widget> screens = [
       Text("Screen 1"),
-      Text("Screen 2"),
-      Text("Screen 3"),
+      ProfileScreen(),
+      SettingsScreen(),
     ];
 
     return Consumer<MainNavigationProvider>(
@@ -28,7 +30,9 @@ class MainNavigation extends StatelessWidget {
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
-                topRight: Radius.circular(16), topLeft: Radius.circular(16)),
+              topRight: Radius.circular(16),
+              topLeft: Radius.circular(16),
+            ),
             border: Border.all(
               color: CustomColors.grey,
             ),

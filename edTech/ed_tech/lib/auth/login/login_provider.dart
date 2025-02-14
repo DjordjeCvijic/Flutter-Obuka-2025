@@ -8,10 +8,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginProvider extends ChangeNotifier {
   final TextEditingController emailTextController = TextEditingController();
-
   final TextEditingController passwordTextController = TextEditingController();
 
-  Future<bool> onLogIn({required BuildContext context}) async {
+  Future<(bool, UserModel?)> onLogIn({required BuildContext context}) async {
     if (emailTextController.text.isEmpty ||
         passwordTextController.text.isEmpty) {
       ETScaffoldMessenger.showMessage(
@@ -23,11 +22,12 @@ class LoginProvider extends ChangeNotifier {
         if (userList.any((user) => user.email == emailTextController.text)) {
           UserModel user = userList.firstWhere(
               (userElement) => userElement.email == emailTextController.text);
+
           if (user.password == passwordTextController.text) {
             //Login success
             UserService.setUserLoggedIn(true);
 
-            return true;
+            return (true, user);
           } else {
             ETScaffoldMessenger.showMessage(
                 context: context, messageText: 'Wrong credentials');
@@ -42,7 +42,7 @@ class LoginProvider extends ChangeNotifier {
       }
     }
 
-    return false;
+    return (false, null);
   }
 
   Future<bool> googleSignIn({required BuildContext context}) async {
@@ -97,5 +97,13 @@ class LoginProvider extends ChangeNotifier {
     }
 
     return success;
+  }
+
+  void setUserDataInForm({
+    required String userEmail,
+    required String userPassword,
+  }) {
+    emailTextController.text = userEmail;
+    passwordTextController.text = userPassword;
   }
 }

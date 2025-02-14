@@ -3,6 +3,7 @@ import 'package:ed_tech/helpers/custom_colors.dart';
 import 'package:ed_tech/auth/login/login_provider.dart';
 import 'package:ed_tech/auth/sign_up/sign_up_provider.dart';
 import 'package:ed_tech/auth/sign_up/sign_up_screen.dart';
+import 'package:ed_tech/main_provider.dart';
 import 'package:ed_tech/widgets/et_button.dart';
 import 'package:ed_tech/widgets/text_column.dart';
 import 'package:ed_tech/widgets/input_fields/et_text_input_field.dart';
@@ -15,6 +16,7 @@ import '../../helpers/custom_icons.dart';
 import '../../helpers/custom_images.dart';
 import '../../helpers/custom_themes.dart';
 import '../../main_navigation/main_navigation_provider.dart';
+import '../../models/user_model.dart';
 import '../../widgets/input_fields/et_password_input_field.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -24,6 +26,8 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final LoginProvider provider =
         Provider.of<LoginProvider>(context, listen: false);
+    final MainProvider mainProvider =
+        Provider.of<MainProvider>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -90,8 +94,10 @@ class LoginScreen extends StatelessWidget {
                 rightMargin: 16,
                 buttonText: "Log in",
                 onTapButton: () async {
-                  bool loginSuccess = await provider.onLogIn(context: context);
-                  if (loginSuccess) {
+                  (bool, UserModel?) loginResult =
+                      await provider.onLogIn(context: context);
+                  if (loginResult.$1) {
+                    mainProvider.loggedUser = loginResult.$2!;
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (context) => ChangeNotifierProvider(
@@ -105,13 +111,23 @@ class LoginScreen extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context)
+                      .push(
                     MaterialPageRoute(
                       builder: (context) => ChangeNotifierProvider(
                         create: (context) => SignUpProvider(),
                         child: SignUpScreen(),
                       ),
                     ),
+                  )
+                      .then(
+                    (value) {
+                      if (value != null) {
+                        provider.setUserDataInForm(
+                            userEmail: (value as UserModel).email,
+                            userPassword: value.password);
+                      }
+                    },
                   );
                 },
                 child: Text(

@@ -9,6 +9,7 @@ class SignUpProvider extends ChangeNotifier {
   final TextEditingController nameTextController = TextEditingController();
   final TextEditingController emailTextController = TextEditingController();
   final TextEditingController passwordTextController = TextEditingController();
+  late UserModel registeredUser;
 
   Future<bool> onSignUp({required BuildContext context}) async {
     if (nameTextController.text.isEmpty ||
@@ -26,13 +27,13 @@ class SignUpProvider extends ChangeNotifier {
         ETScaffoldMessenger.showMessage(
             context: context, messageText: "Credentials error");
       } else {
-        UserModel user = UserModel(
+        registeredUser = UserModel(
           name: nameTextController.text,
           email: emailTextController.text,
           password: passwordTextController.text,
         );
 
-        bool success = await UserService.saveUserData(userData: user);
+        bool success = await UserService.saveUserData(userData: registeredUser);
 
         if (success) {
           ETScaffoldMessenger.showMessage(

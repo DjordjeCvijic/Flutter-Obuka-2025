@@ -59,7 +59,7 @@ class SignUpScreen extends StatelessWidget {
                 onTapButton: () async {
                   bool success = await provider.onSignUp(context: context);
                   if (success) {
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pop(provider.registeredUser);
                   }
                 },
               ),
