@@ -20,7 +20,7 @@ class UserService {
       Map<String, dynamic> decodedRes = jsonDecode(response.body);
 
       decodedRes.forEach((key, value) {
-        UserModel user = UserModel.fromJson(value);
+        UserModel user = UserModel.fromJson(value, key);
         userList.add(user);
       });
     }
@@ -42,5 +42,15 @@ class UserService {
   static void setUserLoggedIn(bool value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool(SharedPreferencesKeys.loggedIn, value);
+  }
+
+  static void writeEmailToSP({required String email}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(SharedPreferencesKeys.userEmail, email);
+  }
+
+  static Future<String?> readEmailFromSP() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(SharedPreferencesKeys.userEmail);
   }
 }

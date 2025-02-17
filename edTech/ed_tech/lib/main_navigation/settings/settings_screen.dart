@@ -1,6 +1,9 @@
 import 'package:ed_tech/helpers/custom_icons.dart';
 import 'package:ed_tech/helpers/custom_images.dart';
 import 'package:ed_tech/helpers/custom_themes.dart';
+import 'package:ed_tech/main_navigation/settings/change_data/edit_name_provider.dart';
+import 'package:ed_tech/main_navigation/settings/change_data/edit_name_screen.dart';
+import 'package:ed_tech/main_navigation/settings/settings_provider.dart';
 import 'package:ed_tech/main_navigation/settings/widgets/notifications_box.dart';
 import 'package:ed_tech/main_navigation/settings/widgets/person_info_box.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,8 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final MainProvider mainProvider =
         Provider.of<MainProvider>(context, listen: false);
+    final SettingsProvider settingsProvider =
+        Provider.of<SettingsProvider>(context, listen: false);
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -40,10 +45,30 @@ class SettingsScreen extends StatelessWidget {
                       .heading5!
                       .copyWith(color: CustomColors.dark),
                 ),
-                PersonInfoBox(
-                  title: "Name",
-                  subtitle: mainProvider.loggedUser.name,
-                  icon: CustomIcons.circleProfileIcon,
+                Consumer<SettingsProvider>(
+                  builder: (context, value, child) => PersonInfoBox(
+                    title: "Name",
+                    subtitle: mainProvider.loggedUser.name,
+                    icon: CustomIcons.circleProfileIcon,
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(
+                        MaterialPageRoute(
+                          builder: (context) => ChangeNotifierProvider(
+                            create: (context) => EditNameProvider(),
+                            child: EditNameScreen(),
+                          ),
+                        ),
+                      )
+                          .then(
+                        (value) {
+                          if (value != null && value) {
+                            settingsProvider.refreshUI();
+                          }
+                        },
+                      );
+                    },
+                  ),
                 ),
                 PersonInfoBox(
                   title: "Email",

@@ -5,6 +5,7 @@ import 'package:ed_tech/auth/welcome/providers/et_placeholder_provider.dart';
 import 'package:ed_tech/auth/welcome/splash_screen.dart';
 import 'package:ed_tech/auth/welcome/welcome_screen_1.dart';
 import 'package:ed_tech/main_navigation/main_navigation_provider.dart';
+import 'package:ed_tech/main_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,22 +16,28 @@ class ETPlaceholder extends StatelessWidget {
   Widget build(BuildContext context) {
     final EtPlaceholderProvider provider =
         Provider.of<EtPlaceholderProvider>(context, listen: false);
+    final MainProvider mainProvider =
+        Provider.of<MainProvider>(context, listen: false);
     return FutureBuilder(
       future: provider.nextScreen(),
-      builder: (context, snapshot) =>
-          snapshot.connectionState == ConnectionState.waiting
-              ? SplashScreen()
-              : (snapshot.data == NextScreenEnum.loginScreen
-                  ? ChangeNotifierProvider(
-                      create: (context) => LoginProvider(),
-                      child: LoginScreen(),
-                    )
-                  : (snapshot.data == NextScreenEnum.welcomeScreen
-                      ? WelcomeScreen1()
-                      : ChangeNotifierProvider(
-                          create: (context) => MainNavigationProvider(),
-                          child: MainNavigation(),
-                        ))),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return SplashScreen();
+        } else if (snapshot.data!.$1 == NextScreenEnum.loginScreen) {
+          return ChangeNotifierProvider(
+            create: (context) => LoginProvider(),
+            child: LoginScreen(),
+          );
+        } else if (snapshot.data!.$1 == NextScreenEnum.welcomeScreen) {
+          return WelcomeScreen1();
+        } else {
+          mainProvider.loggedUser = snapshot.data!.$2!;
+          return ChangeNotifierProvider(
+            create: (context) => MainNavigationProvider(),
+            child: MainNavigation(),
+          );
+        }
+      },
     );
   }
 }

@@ -26,7 +26,7 @@ class LoginProvider extends ChangeNotifier {
           if (user.password == passwordTextController.text) {
             //Login success
             UserService.setUserLoggedIn(true);
-
+            UserService.writeEmailToSP(email: emailTextController.text);
             return (true, user);
           } else {
             ETScaffoldMessenger.showMessage(

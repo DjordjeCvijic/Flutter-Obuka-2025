@@ -1,5 +1,6 @@
 import 'package:ed_tech/main_navigation/main_navigation_provider.dart';
 import 'package:ed_tech/main_navigation/profile/profile_screen.dart';
+import 'package:ed_tech/main_navigation/settings/settings_provider.dart';
 import 'package:ed_tech/main_navigation/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,7 +20,10 @@ class MainNavigation extends StatelessWidget {
     List<Widget> screens = [
       Text("Screen 1"),
       ProfileScreen(),
-      SettingsScreen(),
+      ChangeNotifierProvider(
+        create: (context) => SettingsProvider(),
+        child: SettingsScreen(),
+      )
     ];
 
     return Consumer<MainNavigationProvider>(

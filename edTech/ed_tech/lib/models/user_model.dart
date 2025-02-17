@@ -1,9 +1,11 @@
 class UserModel {
-  final String name;
+  final String? id;
+  String name;
   final String email;
-  final String password;
+  String password;
 
   UserModel({
+    this.id,
     required this.name,
     required this.email,
     required this.password,
@@ -17,8 +19,9 @@ class UserModel {
     };
   }
 
-  static UserModel fromJson(json) {
+  static UserModel fromJson(json, String id) {
     return UserModel(
+      id: id,
       name: json["name"],
       email: json["email"],
       password: json["password"],
