@@ -87,7 +87,8 @@ class LoginProvider extends ChangeNotifier {
 
   Future<bool> _saveUserData(
       {required UserModel userModel, required BuildContext context}) async {
-    bool success = await UserService.saveUserData(userData: userModel);
+    bool success =
+        await UserService.saveUserDataOnFirebase(userData: userModel);
 
     if (success) {
       ETScaffoldMessenger.showMessage(

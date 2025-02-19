@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:ed_tech/helpers/global_const.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class SettingsProvider extends ChangeNotifier {
   Future<bool> checkNotificationFlag() async {
@@ -24,5 +23,13 @@ class SettingsProvider extends ChangeNotifier {
 
   void refreshUI() {
     notifyListeners();
+  }
+
+  String getTimeAgo(String? timeAsString) {
+    if (timeAsString == null) {
+      return "";
+    } else {
+      return "changed ${timeago.format(DateTime.parse(timeAsString))}";
+    }
   }
 }

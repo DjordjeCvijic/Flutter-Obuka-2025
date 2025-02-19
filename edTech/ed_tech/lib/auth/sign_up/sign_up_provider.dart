@@ -33,7 +33,8 @@ class SignUpProvider extends ChangeNotifier {
           password: passwordTextController.text,
         );
 
-        bool success = await UserService.saveUserData(userData: registeredUser);
+        bool success =
+            await UserService.saveUserDataOnFirebase(userData: registeredUser);
 
         if (success) {
           ETScaffoldMessenger.showMessage(

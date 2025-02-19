@@ -7,9 +7,11 @@ import '../../helpers/custom_themes.dart';
 
 class ETPasswordInputField extends StatefulWidget {
   final TextEditingController textEditingController;
+  final String? hintText;
   const ETPasswordInputField({
     super.key,
     required this.textEditingController,
+    this.hintText,
   });
 
   @override
@@ -36,27 +38,35 @@ class _ETPasswordInputFieldState extends State<ETPasswordInputField> {
     );
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16),
-      child: TextField(
-        obscureText: !isVisible,
-        controller: widget.textEditingController,
-        decoration: InputDecoration(
-          labelText: "Password",
-          labelStyle: ownTheme(context).pMedium,
-          focusedBorder: borderDecoration,
-          disabledBorder: borderDecoration,
-          enabledBorder: borderDecoration,
-          border: borderDecoration,
-          suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                isVisible = !isVisible;
-              });
-            },
-            icon: SvgPicture.asset(
-              isVisible ? CustomIcons.visibleIcon : CustomIcons.notVisibleIcon,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widget.hintText != null) Text(widget.hintText!),
+          TextField(
+            obscureText: !isVisible,
+            controller: widget.textEditingController,
+            decoration: InputDecoration(
+              labelText: "Password",
+              labelStyle: ownTheme(context).pMedium,
+              focusedBorder: borderDecoration,
+              disabledBorder: borderDecoration,
+              enabledBorder: borderDecoration,
+              border: borderDecoration,
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    isVisible = !isVisible;
+                  });
+                },
+                icon: SvgPicture.asset(
+                  isVisible
+                      ? CustomIcons.visibleIcon
+                      : CustomIcons.notVisibleIcon,
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

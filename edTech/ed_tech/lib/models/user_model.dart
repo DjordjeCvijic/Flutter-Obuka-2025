@@ -3,12 +3,14 @@ class UserModel {
   String name;
   final String email;
   String password;
+  String? passwordChangedAt;
 
   UserModel({
     this.id,
     required this.name,
     required this.email,
     required this.password,
+    this.passwordChangedAt,
   });
 
   Object toJson() {
@@ -25,6 +27,7 @@ class UserModel {
       name: json["name"],
       email: json["email"],
       password: json["password"],
+      passwordChangedAt: json["password_changed_at"],
     );
   }
 }

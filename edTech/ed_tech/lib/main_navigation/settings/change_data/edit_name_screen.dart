@@ -50,12 +50,12 @@ class EditNameScreen extends StatelessWidget {
                 bottomMargin: 20,
                 buttonText: "Save",
                 onTapButton: () async {
-                  mainProvider.loggedUser.name =
-                      editNameProvider.nameTextController.text;
-
                   bool success = await editNameProvider.saveUserName(
-                      user: mainProvider.loggedUser);
+                    userId: mainProvider.loggedUser.id!,
+                  );
                   if (success) {
+                    mainProvider.loggedUser.name =
+                        editNameProvider.nameTextController.text;
                     ETScaffoldMessenger.showMessage(
                         context: context, messageText: "Name edited");
                     Navigator.of(context).pop(true);

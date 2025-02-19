@@ -11,11 +11,13 @@ class PersonInfoBox extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback? onTap;
+  final bool showRightIcon;
   const PersonInfoBox({
     super.key,
     required this.title,
     required this.subtitle,
     required this.icon,
+    this.showRightIcon = true,
     this.onTap,
   });
 
@@ -58,7 +60,7 @@ class PersonInfoBox extends StatelessWidget {
                 ],
               ),
             ),
-            SvgPicture.asset(CustomIcons.rightArrowIcon)
+            if (showRightIcon) SvgPicture.asset(CustomIcons.rightArrowIcon)
           ],
         ),
       ),

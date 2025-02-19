@@ -3,6 +3,8 @@ import 'package:ed_tech/helpers/custom_images.dart';
 import 'package:ed_tech/helpers/custom_themes.dart';
 import 'package:ed_tech/main_navigation/settings/change_data/edit_name_provider.dart';
 import 'package:ed_tech/main_navigation/settings/change_data/edit_name_screen.dart';
+import 'package:ed_tech/main_navigation/settings/change_data/edit_password_provider.dart';
+import 'package:ed_tech/main_navigation/settings/change_data/edit_password_screen.dart';
 import 'package:ed_tech/main_navigation/settings/settings_provider.dart';
 import 'package:ed_tech/main_navigation/settings/widgets/notifications_box.dart';
 import 'package:ed_tech/main_navigation/settings/widgets/person_info_box.dart';
@@ -32,7 +34,7 @@ class SettingsScreen extends StatelessWidget {
                 ownTheme(context).heading4!.copyWith(color: CustomColors.dark),
           ),
           Gap(20),
-          Image.asset(CustomImages.settingsScreen),
+          Image.asset(CustomImages.settingsScreenImg),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
@@ -74,11 +76,33 @@ class SettingsScreen extends StatelessWidget {
                   title: "Email",
                   subtitle: mainProvider.loggedUser.email,
                   icon: CustomIcons.circleEmailIcon,
+                  showRightIcon: false,
                 ),
-                PersonInfoBox(
-                  title: "Password",
-                  subtitle: "@gmail.com",
-                  icon: CustomIcons.circlePasswordIcon,
+                Consumer<SettingsProvider>(
+                  builder: (context, value, child) => PersonInfoBox(
+                    title: "Password",
+                    subtitle: settingsProvider
+                        .getTimeAgo(mainProvider.loggedUser.passwordChangedAt),
+                    icon: CustomIcons.circlePasswordIcon,
+                    onTap: () {
+                      Navigator.of(context)
+                          .push(
+                        MaterialPageRoute(
+                          builder: (context) => ChangeNotifierProvider(
+                            create: (context) => EditPasswordProvider(),
+                            child: EditPasswordScreen(),
+                          ),
+                        ),
+                      )
+                          .then(
+                        (value) {
+                          if (value != null && value) {
+                            settingsProvider.refreshUI();
+                          }
+                        },
+                      );
+                    },
+                  ),
                 ),
                 Gap(20)
               ],

@@ -27,7 +27,8 @@ class UserService {
     return userList;
   }
 
-  static Future<bool> saveUserData({required UserModel userData}) async {
+  static Future<bool> saveUserDataOnFirebase(
+      {required UserModel userData}) async {
     String url = GlobalConst.firebaseURL + GlobalConst.userNode;
     Response response = await http.post(
       Uri.parse(url),
@@ -37,6 +38,54 @@ class UserService {
     );
 
     return response.statusCode == 200;
+  }
+
+  static Future<bool> editUserNameOnFirebase({
+    required String userId,
+    required String newName,
+  }) async {
+    String url = "${GlobalConst.firebaseURL}/user/$userId.json";
+    Response response = await http.patch(
+      Uri.parse(url),
+      body: jsonEncode(
+        {
+          "name": newName,
+        },
+      ),
+    );
+    if (response.statusCode != 200) {
+      log("ERROR: ${response.body}");
+    }
+
+    return response.statusCode == 200;
+  }
+
+  static Future<bool> editUserPasswordOnFirebase({
+    required String userId,
+    required String newPassword,
+  }) async {
+    try {
+      DateTime nowDateTime = DateTime.now();
+
+      String url = "${GlobalConst.firebaseURL}/user/$userId.json";
+      Response response = await http.patch(
+        Uri.parse(url),
+        body: jsonEncode(
+          {
+            "password": newPassword,
+            "password_changed_at": nowDateTime.toIso8601String(),
+          },
+        ),
+      );
+      if (response.statusCode != 200) {
+        log("ERROR: ${response.body}");
+      }
+
+      return response.statusCode == 200;
+    } catch (exception) {
+      log("EXCEPTION editUserPasswordOnFirebase : $exception");
+      return false;
+    }
   }
 
   static void setUserLoggedIn(bool value) async {
