@@ -61,6 +61,12 @@ class CustomThemes {
           height: 26 / 20,
           color: CustomColors.textColor,
         ),
+        pSmall: TextStyle(
+          fontSize: 12.0,
+          fontWeight: FontWeight.w500,
+          height: 18 / 12,
+          color: CustomColors.textColor,
+        ),
       ),
     );
 }
@@ -71,6 +77,7 @@ class OwnThemeFields {
   final TextStyle? heading4;
   final TextStyle? heading5;
   final TextStyle? pMedium;
+  final TextStyle? pSmall;
   final TextStyle? buttonSmall;
   final TextStyle? buttonMedium;
 
@@ -80,6 +87,7 @@ class OwnThemeFields {
     required this.heading4,
     required this.heading5,
     required this.pMedium,
+    required this.pSmall,
     required this.buttonSmall,
     required this.buttonMedium,
   });
@@ -93,6 +101,7 @@ class OwnThemeFields {
       pMedium: TextStyle(),
       buttonSmall: TextStyle(),
       buttonMedium: TextStyle(),
+      pSmall: TextStyle(),
     );
   }
 }

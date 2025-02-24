@@ -63,6 +63,7 @@ class LoginProvider extends ChangeNotifier {
           bool checkResponse = _checkUserPassword(users, userModel);
           if (checkResponse) {
             UserService.setUserLoggedIn(true);
+            UserService.writeEmailToSP(email: userModel.email);
           }
           return checkResponse;
         } else {

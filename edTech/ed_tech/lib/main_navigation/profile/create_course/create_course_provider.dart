@@ -1,4 +1,8 @@
+import 'package:ed_tech/models/course_model.dart';
+import 'package:ed_tech/services/course_service.dart';
 import 'package:flutter/material.dart';
+
+import '../../../helpers/et_scaffold_messenger.dart';
 
 class CreateCourseProvider extends ChangeNotifier {
   final TextEditingController courseNameController = TextEditingController();
@@ -11,5 +15,38 @@ class CreateCourseProvider extends ChangeNotifier {
   void setDuration({required Duration newDuration}) {
     duration = newDuration;
     notifyListeners();
+  }
+
+  Future<bool> saveCourse({
+    required BuildContext context,
+    required String loggedUserId,
+  }) async {
+    if (courseNameController.text.isEmpty ||
+        courseDescriptionController.text.isEmpty ||
+        coursePriceController.text.isEmpty ||
+        duration.inSeconds == 0) {
+      ETScaffoldMessenger.showMessage(
+          context: context, messageText: "Please enter all date");
+    } else {
+      CourseModel courseModel = CourseModel(
+        name: courseNameController.text,
+        description: courseDescriptionController.text,
+        duration: "${duration.inHours} h ${(duration.inMinutes % 60)} min",
+        price: coursePriceController.text,
+        creatorId: loggedUserId,
+      );
+
+      bool success = await CourseService.saveCourseDataOnFirebase(
+          courseModel: courseModel);
+
+      if (success) {
+        ETScaffoldMessenger.showMessage(
+            context: context, messageText: "Course created");
+        return true;
+      } else {
+        ETScaffoldMessenger.showMessage(context: context, messageText: "ERROR");
+      }
+    }
+    return false;
   }
 }

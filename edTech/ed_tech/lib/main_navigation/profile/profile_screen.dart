@@ -1,4 +1,5 @@
 import 'package:ed_tech/helpers/custom_images.dart';
+import 'package:ed_tech/main_navigation/profile/my_courses/my_courses_provider.dart';
 import 'package:ed_tech/main_navigation/profile/my_courses/my_courses_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -35,7 +36,10 @@ class ProfileScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => MyCoursesScreen(),
+                      builder: (context) => ChangeNotifierProvider(
+                        create: (context) => MyCoursesProvider(),
+                        child: MyCoursesScreen(),
+                      ),
                     ),
                   );
                 },

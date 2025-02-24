@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:ed_tech/main_navigation/profile/create_course/create_course_provider.dart';
+import 'package:ed_tech/main_provider.dart';
+import 'package:ed_tech/widgets/et_button.dart';
 import 'package:ed_tech/widgets/et_title_with_back_button.dart';
 import 'package:ed_tech/widgets/input_fields/et_text_input_field.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +20,12 @@ class CreateCourseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final CreateCourseProvider createCourseProvider =
         Provider.of<CreateCourseProvider>(context, listen: false);
+    final MainProvider mainProvider =
+        Provider.of<MainProvider>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           child: Column(
             children: [
               ETTitleWithBackButton(title: "Create course"),
@@ -29,6 +33,7 @@ class CreateCourseScreen extends StatelessWidget {
               Gap(20),
               Expanded(
                 child: SingleChildScrollView(
+                  padding: EdgeInsets.only(top: 4),
                   child: Column(
                     spacing: 12,
                     children: [
@@ -49,6 +54,7 @@ class CreateCourseScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           showDialog(
                             context: context,
                             builder: (context) => Dialog(
@@ -83,6 +89,22 @@ class CreateCourseScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      ETButton(
+                        leftMargin: 0,
+                        rightMargin: 0,
+                        topMargin: 12,
+                        bottomMargin: 12,
+                        buttonText: "Save Course",
+                        onTapButton: () async {
+                          bool success = await createCourseProvider.saveCourse(
+                            context: context,
+                            loggedUserId: mainProvider.loggedUser.id!,
+                          );
+                          if (success) {
+                            Navigator.of(context).pop();
+                          }
+                        },
+                      )
                     ],
                   ),
                 ),
