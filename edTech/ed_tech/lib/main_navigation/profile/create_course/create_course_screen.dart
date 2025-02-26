@@ -90,6 +90,14 @@ class CreateCourseScreen extends StatelessWidget {
                         ),
                       ),
                       ETButton(
+                        topMargin: 12,
+                        bottomMargin: 12,
+                        buttonText: "Pick photo",
+                        onTapButton: () async {
+                          createCourseProvider.pickPhotoFromGallery();
+                        },
+                      ),
+                      ETButton(
                         leftMargin: 0,
                         rightMargin: 0,
                         topMargin: 12,
@@ -101,7 +109,7 @@ class CreateCourseScreen extends StatelessWidget {
                             loggedUserId: mainProvider.loggedUser.id!,
                           );
                           if (success) {
-                            Navigator.of(context).pop();
+                            Navigator.of(context).pop(success);
                           }
                         },
                       )

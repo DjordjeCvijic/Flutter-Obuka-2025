@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:ed_tech/helpers/custom_images.dart';
 import 'package:ed_tech/helpers/custom_themes.dart';
 import 'package:ed_tech/models/course_model.dart';
 import 'package:flutter/widgets.dart';
 
 import '../helpers/custom_colors.dart';
+import 'et_price_chip.dart';
 
 class ETCourseBox extends StatelessWidget {
   final CourseModel courseModel;
@@ -14,6 +18,7 @@ class ETCourseBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         border: Border.all(color: CustomColors.grey),
         borderRadius: BorderRadius.all(
@@ -23,9 +28,28 @@ class ETCourseBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 194,
-            child: Text("course photo"),
+          Stack(
+            children: [
+              SizedBox(
+                height: 194,
+                child: courseModel.photoBase64Code != null
+                    ? Image.memory(
+                        base64Decode(courseModel.photoBase64Code!),
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        CustomImages.courseImg,
+                        fit: BoxFit.cover,
+                      ),
+              ),
+              Positioned(
+                right: 16,
+                bottom: 8,
+                child: PriceChip(
+                  price: courseModel.price,
+                ),
+              )
+            ],
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
@@ -46,6 +70,7 @@ class ETCourseBox extends StatelessWidget {
                 ),
                 Text(
                   courseModel.description,
+                  overflow: TextOverflow.ellipsis,
                   style: ownTheme(context)
                       .pMedium!
                       .copyWith(color: CustomColors.dark),

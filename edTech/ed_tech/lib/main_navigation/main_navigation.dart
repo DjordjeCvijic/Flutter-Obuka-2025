@@ -1,3 +1,5 @@
+import 'package:ed_tech/main_navigation/courses/courses_provider.dart';
+import 'package:ed_tech/main_navigation/courses/courses_screen.dart';
 import 'package:ed_tech/main_navigation/main_navigation_provider.dart';
 import 'package:ed_tech/main_navigation/profile/profile_screen.dart';
 import 'package:ed_tech/main_navigation/settings/settings_provider.dart';
@@ -18,7 +20,10 @@ class MainNavigation extends StatelessWidget {
         Provider.of<MainNavigationProvider>(context, listen: false);
 
     List<Widget> screens = [
-      Text("Screen 1"),
+      ChangeNotifierProvider(
+        create: (context) => CoursesProvider(),
+        child: CoursesScreen(),
+      ),
       ProfileScreen(),
       ChangeNotifierProvider(
         create: (context) => SettingsProvider(),

@@ -52,9 +52,10 @@ class LoginScreen extends StatelessWidget {
                   SvgPicture.asset(CustomIcons.instagramLoginIcon),
                   InkWell(
                     onTap: () async {
-                      bool googleSignInSuccess =
+                      (bool, UserModel?) googleSignUpResult =
                           await provider.googleSignIn(context: context);
-                      if (googleSignInSuccess) {
+                      if (googleSignUpResult.$1) {
+                        mainProvider.loggedUser = googleSignUpResult.$2!;
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                             builder: (context) => ChangeNotifierProvider(

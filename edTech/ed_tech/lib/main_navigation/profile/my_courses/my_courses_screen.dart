@@ -30,24 +30,26 @@ class MyCoursesScreen extends StatelessWidget {
                 title: "Your Courses",
               ),
               Gap(20),
-              FutureBuilder(
-                future: myCoursesProvider.fetchCourses(
-                    loggedUserId: mainProvider.loggedUser.id!),
-                builder: (context, snapshot) => snapshot.connectionState ==
-                        ConnectionState.waiting
-                    ? CircularProgressIndicator()
-                    : (snapshot.data!.isEmpty
-                        ? Text("No created courses")
-                        : Expanded(
-                            child: ListView.separated(
-                              padding: EdgeInsets.only(bottom: 50),
-                              separatorBuilder: (context, index) => Gap(16),
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) => ETCourseBox(
-                                courseModel: snapshot.data!.elementAt(index),
+              Consumer<MyCoursesProvider>(
+                builder: (context, value, child) => FutureBuilder(
+                  future: myCoursesProvider.fetchCourses(
+                      loggedUserId: mainProvider.loggedUser.id!),
+                  builder: (context, snapshot) => snapshot.connectionState ==
+                          ConnectionState.waiting
+                      ? CircularProgressIndicator()
+                      : (snapshot.data!.isEmpty
+                          ? Text("No created courses")
+                          : Expanded(
+                              child: ListView.separated(
+                                padding: EdgeInsets.only(bottom: 50),
+                                separatorBuilder: (context, index) => Gap(16),
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) => ETCourseBox(
+                                  courseModel: snapshot.data!.elementAt(index),
+                                ),
                               ),
-                            ),
-                          )),
+                            )),
+                ),
               )
             ],
           ),
@@ -55,13 +57,21 @@ class MyCoursesScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
+          Navigator.of(context)
+              .push(
             MaterialPageRoute(
               builder: (context) => ChangeNotifierProvider(
                 create: (context) => CreateCourseProvider(),
                 child: CreateCourseScreen(),
               ),
             ),
+          )
+              .then(
+            (value) {
+              if (value != null && value) {
+                myCoursesProvider.refreshScreen();
+              }
+            },
           );
         },
         backgroundColor: CustomColors.primary,

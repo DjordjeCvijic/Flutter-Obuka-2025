@@ -22,4 +22,5 @@ class CustomIcons {
   static const String circleEmailIcon = "assets/icons/circle_email_icon.svg";
   static const String circlePasswordIcon =
       "assets/icons/circle_password_icon.svg";
+  static const String searchIcon = "assets/icons/search_icon.svg";
 }

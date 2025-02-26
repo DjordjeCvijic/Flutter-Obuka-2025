@@ -7,4 +7,5 @@ class CustomImages {
   static String signUpImg = "assets/images/sign_up_img.png";
   static String settingsScreenImg = "assets/images/settings_screen_img.png";
   static String profileScreenImg = "assets/images/profile_screen_img.png";
+  static String courseImg = "assets/images/course_img.png";
 }

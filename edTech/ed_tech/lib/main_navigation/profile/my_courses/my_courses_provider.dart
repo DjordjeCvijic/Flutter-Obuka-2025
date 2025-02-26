@@ -13,4 +13,8 @@ class MyCoursesProvider extends ChangeNotifier {
         .reversed
         .toList();
   }
+
+  void refreshScreen() {
+    notifyListeners();
+  }
 }

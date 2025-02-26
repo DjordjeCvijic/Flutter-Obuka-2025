@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ed_tech/models/course_model.dart';
 import 'package:http/http.dart';
@@ -9,15 +10,20 @@ class CourseService {
   static Future<bool> saveCourseDataOnFirebase({
     required CourseModel courseModel,
   }) async {
-    String url = GlobalConst.firebaseURL + GlobalConst.courseNode;
-    Response response = await http.post(
-      Uri.parse(url),
-      body: jsonEncode(
-        courseModel.toJson(),
-      ),
-    );
+    try {
+      String url = GlobalConst.firebaseURL + GlobalConst.courseNode;
+      Response response = await http.post(
+        Uri.parse(url),
+        body: jsonEncode(
+          courseModel.toJson(),
+        ),
+      );
 
-    return response.statusCode == 200;
+      return response.statusCode == 200;
+    } catch (e) {
+      log("Exception saveCourseDataOnFirebase: $e");
+      return false;
+    }
   }
 
   static Future<List<CourseModel>> fetchAllCorsesFromFirebase() async {

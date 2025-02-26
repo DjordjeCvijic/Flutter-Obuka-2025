@@ -7,6 +7,7 @@ class CourseModel {
   final String duration;
   final String price;
   final String creatorId;
+  final String? photoBase64Code;
 
   CourseModel({
     this.id,
@@ -15,6 +16,7 @@ class CourseModel {
     required this.duration,
     required this.price,
     required this.creatorId,
+    this.photoBase64Code,
   });
 
   Object toJson() {
@@ -24,6 +26,7 @@ class CourseModel {
       "duration": duration,
       "price": price,
       "creator_id": creatorId,
+      "photo": photoBase64Code,
     };
   }
 
@@ -37,6 +40,7 @@ class CourseModel {
         duration: json["duration"],
         price: json["price"],
         creatorId: json["creator_id"],
+        photoBase64Code: json["photo"],
       );
     } catch (e) {
       log("EXCEPTION CourseModel fromJson: $e");

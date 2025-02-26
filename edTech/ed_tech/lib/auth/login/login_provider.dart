@@ -45,7 +45,8 @@ class LoginProvider extends ChangeNotifier {
     return (false, null);
   }
 
-  Future<bool> googleSignIn({required BuildContext context}) async {
+  Future<(bool, UserModel?)> googleSignIn(
+      {required BuildContext context}) async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       if (googleUser != null) {
@@ -59,15 +60,26 @@ class LoginProvider extends ChangeNotifier {
         List<UserModel> users = await UserService.fetchUsersFromFirebase();
 
         if (users.any((user) => user.email == userModel.email)) {
+          UserModel loggedUser =
+              users.firstWhere((user) => user.email == userModel.email);
           //User already exists in database
           bool checkResponse = _checkUserPassword(users, userModel);
           if (checkResponse) {
             UserService.setUserLoggedIn(true);
             UserService.writeEmailToSP(email: userModel.email);
+            return (checkResponse, loggedUser);
           }
-          return checkResponse;
         } else {
-          return _saveUserData(userModel: userModel, context: context);
+          bool userSaved =
+              await _saveUserData(userModel: userModel, context: context);
+          if (userSaved) {
+            users = await UserService.fetchUsersFromFirebase();
+            UserModel loggedUser =
+                users.firstWhere((user) => user.email == userModel.email);
+            UserService.setUserLoggedIn(true);
+            UserService.writeEmailToSP(email: userModel.email);
+            return (userSaved, loggedUser);
+          }
         }
       } else {
         ETScaffoldMessenger.showMessage(
@@ -76,7 +88,7 @@ class LoginProvider extends ChangeNotifier {
     } on Exception catch (e) {
       log('exception->$e');
     }
-    return false;
+    return (false, null);
   }
 
   bool _checkUserPassword(List<UserModel> users, UserModel userModel) {
