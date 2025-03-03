@@ -11,14 +11,15 @@ class ETCircleButton extends StatelessWidget {
   final double padding;
   final double size;
   final VoidCallback onTap;
-  const ETCircleButton(
-      {super.key,
-      required this.onTap,
-      this.size = 48,
-      this.padding = 16,
-      this.iconPath = CustomIcons.leftArrowIcon,
-      this.leftMargin = 0,
-      this.topMargin = 0});
+  const ETCircleButton({
+    super.key,
+    required this.onTap,
+    this.size = 48,
+    this.padding = 16,
+    this.iconPath = CustomIcons.leftArrowIcon,
+    this.leftMargin = 0,
+    this.topMargin = 0,
+  });
 
   @override
   Widget build(BuildContext context) {

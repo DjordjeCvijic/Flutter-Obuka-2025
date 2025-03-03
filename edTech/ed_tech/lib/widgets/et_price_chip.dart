@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 
 import '../helpers/custom_colors.dart';
 
-class PriceChip extends StatelessWidget {
+class ETPriceChip extends StatelessWidget {
   final String price;
-  const PriceChip({
+  const ETPriceChip({
     super.key,
     required this.price,
   });

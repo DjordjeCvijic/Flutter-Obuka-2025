@@ -7,6 +7,7 @@ import '../../helpers/custom_themes.dart';
 
 class EtSearchInputField extends StatelessWidget {
   final VoidCallback? onSearchIconTap;
+  final VoidCallback? onChangeSearchQuery;
   final TextEditingController textEditingController;
   final String hintText;
   const EtSearchInputField({
@@ -14,6 +15,7 @@ class EtSearchInputField extends StatelessWidget {
     required this.hintText,
     this.onSearchIconTap,
     required this.textEditingController,
+    this.onChangeSearchQuery,
   });
 
   @override
@@ -28,6 +30,11 @@ class EtSearchInputField extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 12),
       child: TextField(
         controller: textEditingController,
+        onChanged: (value) {
+          if (onChangeSearchQuery != null) {
+            onChangeSearchQuery!();
+          }
+        },
         decoration: InputDecoration(
           labelText: hintText,
           labelStyle: ownTheme(context).pMedium,

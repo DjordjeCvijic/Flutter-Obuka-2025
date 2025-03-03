@@ -1,9 +1,9 @@
-import 'dart:developer';
-
 import 'package:ed_tech/helpers/custom_colors.dart';
 import 'package:ed_tech/helpers/custom_icons.dart';
 import 'package:ed_tech/helpers/custom_themes.dart';
 import 'package:ed_tech/main_navigation/courses/courses_provider.dart';
+import 'package:ed_tech/main_navigation/courses/search_results/search_results_provider.dart';
+import 'package:ed_tech/main_navigation/courses/search_results/search_results_screen.dart';
 import 'package:ed_tech/main_provider.dart';
 import 'package:ed_tech/widgets/et_circle_button.dart';
 import 'package:ed_tech/widgets/et_course_box.dart';
@@ -57,9 +57,18 @@ class CoursesScreen extends StatelessWidget {
           ),
           EtSearchInputField(
             hintText: 'Search courses',
-            textEditingController: TextEditingController(),
+            textEditingController: coursesProvider.searchQueryController,
             onSearchIconTap: () {
-              log("Iconica za pretragu");
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ChangeNotifierProvider(
+                    create: (context) => SearchResultsProvider(
+                        searchQuery:
+                            coursesProvider.searchQueryController.text),
+                    child: SearchResultsScreen(),
+                  ),
+                ),
+              );
             },
           ),
           FutureBuilder(

@@ -62,7 +62,6 @@ class CreateCourseProvider extends ChangeNotifier {
 
   void pickPhotoFromGallery() async {
     final ImagePicker picker = ImagePicker();
-// Pick an image.
     image = await picker.pickImage(source: ImageSource.gallery);
   }
 }

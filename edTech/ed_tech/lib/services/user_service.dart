@@ -15,7 +15,6 @@ class UserService {
 
     Response response = await http.get(Uri.parse(url));
 
-    log("Response as string: ${response.body}");
     if (response.body != "null") {
       Map<String, dynamic> decodedRes = jsonDecode(response.body);
 
@@ -86,6 +85,26 @@ class UserService {
       log("EXCEPTION editUserPasswordOnFirebase : $exception");
       return false;
     }
+  }
+
+  static Future<bool> editUserSavedCoursesOnFirebase({
+    required String userId,
+    required List<String> listToSave,
+  }) async {
+    String url = "${GlobalConst.firebaseURL}/user/$userId.json";
+    Response response = await http.patch(
+      Uri.parse(url),
+      body: jsonEncode(
+        {
+          "saved_courses": listToSave.join(","),
+        },
+      ),
+    );
+    if (response.statusCode != 200) {
+      log("ERROR: ${response.body}");
+    }
+
+    return response.statusCode == 200;
   }
 
   static void setUserLoggedIn(bool value) async {
