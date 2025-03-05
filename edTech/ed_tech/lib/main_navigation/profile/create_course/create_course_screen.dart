@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:ed_tech/helpers/custom_loading_indicator.dart';
 import 'package:ed_tech/main_navigation/profile/create_course/create_course_provider.dart';
 import 'package:ed_tech/main_provider.dart';
 import 'package:ed_tech/widgets/et_button.dart';
@@ -104,13 +105,21 @@ class CreateCourseScreen extends StatelessWidget {
                         bottomMargin: 12,
                         buttonText: "Save Course",
                         onTapButton: () async {
-                          bool success = await createCourseProvider.saveCourse(
+                          bool success = false;
+                          CustomLoadingIndicator.callMethodWithLoadingIndicator(
                             context: context,
-                            loggedUserId: mainProvider.loggedUser.id!,
+                            callback: () async {
+                              success = await createCourseProvider.saveCourse(
+                                context: context,
+                                loggedUserId: mainProvider.loggedUser.id!,
+                              );
+                            },
+                            onFinished: () {
+                              if (success) {
+                                Navigator.of(context).pop(success);
+                              }
+                            },
                           );
-                          if (success) {
-                            Navigator.of(context).pop(success);
-                          }
                         },
                       )
                     ],

@@ -42,4 +42,18 @@ class CourseService {
     }
     return courseList;
   }
+
+  static Future<bool> deleteCourseFromFirebase({
+    required String courseId,
+  }) async {
+    String url = "${GlobalConst.firebaseURL}/course/$courseId.json";
+
+    Response response = await http.delete(Uri.parse(url));
+
+    if (response.statusCode != 200) {
+      log("ERROR: ${response.body}");
+    }
+
+    return response.statusCode == 200;
+  }
 }

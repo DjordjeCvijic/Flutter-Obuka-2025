@@ -1,15 +1,16 @@
-import 'package:ed_tech/helpers/custom_colors.dart';
-import 'package:ed_tech/main_navigation/profile/create_course/create_course_provider.dart';
-import 'package:ed_tech/main_navigation/profile/create_course/create_course_screen.dart';
-import 'package:ed_tech/main_navigation/profile/my_courses/my_courses_provider.dart';
-import 'package:ed_tech/main_provider.dart';
-
+import 'package:ed_tech/helpers/custom_loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../../../widgets/et_course_box.dart';
-import '../../../widgets/et_title_with_back_button.dart';
+import '/helpers/custom_colors.dart';
+import '/helpers/et_scaffold_messenger.dart';
+import '/main_provider.dart';
+import '/widgets/et_course_box.dart';
+import '/widgets/et_title_with_back_button.dart';
+import '../create_course/create_course_provider.dart';
+import '../create_course/create_course_screen.dart';
+import 'my_courses_provider.dart';
 
 class MyCoursesScreen extends StatelessWidget {
   const MyCoursesScreen({super.key});
@@ -20,10 +21,11 @@ class MyCoursesScreen extends StatelessWidget {
         Provider.of<MyCoursesProvider>(context, listen: false);
     final MainProvider mainProvider =
         Provider.of<MainProvider>(context, listen: false);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           child: Column(
             children: [
               ETTitleWithBackButton(
@@ -46,6 +48,27 @@ class MyCoursesScreen extends StatelessWidget {
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) => ETCourseBox(
                                   courseModel: snapshot.data!.elementAt(index),
+                                  onDeleteCourse: () async {
+                                    bool success = false;
+                                    CustomLoadingIndicator
+                                        .callMethodWithLoadingIndicator(
+                                      context: context,
+                                      callback: () async {
+                                        success = await myCoursesProvider
+                                            .deleteCourse(
+                                                courseId: snapshot.data!
+                                                    .elementAt(index)
+                                                    .id!);
+                                      },
+                                      onFinished: () {
+                                        ETScaffoldMessenger.showMessage(
+                                            context: context,
+                                            messageText: success
+                                                ? "Course deleted"
+                                                : "Error");
+                                      },
+                                    );
+                                  },
                                 ),
                               ),
                             )),

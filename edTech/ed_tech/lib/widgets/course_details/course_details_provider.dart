@@ -18,6 +18,7 @@ class CourseDetailsProvider extends ChangeNotifier {
     required String courseId,
     required List<String>? currentSavedCourses,
   }) async {
+    await Future.delayed(Duration(seconds: 3));
     List<String> listToSave = [];
     if (currentSavedCourses != null) {
       listToSave.addAll(currentSavedCourses);

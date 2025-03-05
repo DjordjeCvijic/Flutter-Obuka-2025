@@ -1,6 +1,7 @@
 import 'package:ed_tech/helpers/custom_images.dart';
 import 'package:ed_tech/main_navigation/profile/my_courses/my_courses_provider.dart';
 import 'package:ed_tech/main_navigation/profile/my_courses/my_courses_screen.dart';
+import 'package:ed_tech/main_navigation/profile/payment/payment_screen.dart';
 import 'package:ed_tech/main_navigation/profile/saved_courses/saved_courses_provider.dart';
 import 'package:ed_tech/main_navigation/profile/saved_courses/saved_courses_screen.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,16 @@ class ProfileScreen extends StatelessWidget {
               ),
               OptionBox(
                 text: "Payment",
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => PaymentScreen()
+                        // ChangeNotifierProvider(
+                        //   create: (context) => SavedCoursesProvider(),
+                        //   child: SavedCoursesScreen(),
+                        // ),
+                        ),
+                  );
+                },
               ),
               TextButton(
                 onPressed: () {

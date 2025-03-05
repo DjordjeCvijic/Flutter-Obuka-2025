@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:ed_tech/helpers/custom_colors.dart';
+import 'package:ed_tech/helpers/custom_loading_indicator.dart';
 import 'package:ed_tech/helpers/custom_themes.dart';
 import 'package:ed_tech/helpers/et_scaffold_messenger.dart';
 import 'package:ed_tech/main_provider.dart';
@@ -127,49 +128,73 @@ class CourseDetailsScreen extends StatelessWidget {
                                       courseId: courseModel.id!,
                                       currentSavedCourse: mainProvider
                                           .loggedUser.savedCourses)) {
-                                    bool success = await courseDetailsProvider
-                                        .removeCourse(
-                                            userId: mainProvider.loggedUser.id!,
-                                            courseId: courseModel.id!,
-                                            currentSavedCourses: mainProvider
-                                                .loggedUser.savedCourses!);
-                                    if (success) {
-                                      mainProvider.loggedUser.savedCourses!
-                                          .removeWhere(
-                                        (element) => element == courseModel.id,
-                                      );
-                                    }
+                                    bool success = false;
+                                    CustomLoadingIndicator
+                                        .callMethodWithLoadingIndicator(
+                                      context: context,
+                                      callback: () async {
+                                        success = await courseDetailsProvider
+                                            .removeCourse(
+                                                userId:
+                                                    mainProvider.loggedUser.id!,
+                                                courseId: courseModel.id!,
+                                                currentSavedCourses:
+                                                    mainProvider.loggedUser
+                                                        .savedCourses!);
+                                      },
+                                      onFinished: () {
+                                        if (success) {
+                                          mainProvider.loggedUser.savedCourses!
+                                              .removeWhere(
+                                            (element) =>
+                                                element == courseModel.id,
+                                          );
+                                        }
 
-                                    ETScaffoldMessenger.showMessage(
-                                        context: context,
-                                        messageText: success
-                                            ? "Course removed"
-                                            : "Error");
-                                  } else {
-                                    bool success =
-                                        await courseDetailsProvider.saveCourse(
-                                      courseId: courseModel.id!,
-                                      userId: mainProvider.loggedUser.id!,
-                                      currentSavedCourses:
-                                          mainProvider.loggedUser.savedCourses,
+                                        ETScaffoldMessenger.showMessage(
+                                            context: context,
+                                            messageText: success
+                                                ? "Course removed"
+                                                : "Error");
+                                      },
                                     );
-                                    if (success) {
-                                      if (mainProvider
-                                              .loggedUser.savedCourses ==
-                                          null) {
-                                        mainProvider.loggedUser.savedCourses = [
-                                          courseModel.id!
-                                        ];
-                                      } else {
-                                        mainProvider.loggedUser.savedCourses!
-                                            .add(courseModel.id!);
-                                      }
-                                    }
+                                  } else {
+                                    bool success = false;
+                                    CustomLoadingIndicator
+                                        .callMethodWithLoadingIndicator(
+                                      context: context,
+                                      callback: () async {
+                                        success = await courseDetailsProvider
+                                            .saveCourse(
+                                          courseId: courseModel.id!,
+                                          userId: mainProvider.loggedUser.id!,
+                                          currentSavedCourses: mainProvider
+                                              .loggedUser.savedCourses,
+                                        );
+                                      },
+                                      onFinished: () {
+                                        if (success) {
+                                          if (mainProvider
+                                                  .loggedUser.savedCourses ==
+                                              null) {
+                                            mainProvider
+                                                .loggedUser.savedCourses = [
+                                              courseModel.id!
+                                            ];
+                                          } else {
+                                            mainProvider
+                                                .loggedUser.savedCourses!
+                                                .add(courseModel.id!);
+                                          }
+                                        }
 
-                                    ETScaffoldMessenger.showMessage(
-                                        context: context,
-                                        messageText:
-                                            success ? "Course saved" : "Error");
+                                        ETScaffoldMessenger.showMessage(
+                                            context: context,
+                                            messageText: success
+                                                ? "Course saved"
+                                                : "Error");
+                                      },
+                                    );
                                   }
                                 },
                               ),

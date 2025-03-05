@@ -12,12 +12,18 @@ import '../helpers/custom_colors.dart';
 import 'et_price_chip.dart';
 
 class ETCourseBox extends StatelessWidget {
+  //this si variable for...
+  ///This is comment for onCourseRemoved variable
   final VoidCallback? onCourseRemoved;
   final CourseModel courseModel;
+  final VoidCallback? onDeleteCourse;
+
+  /// This is comment for my global widget
   const ETCourseBox({
     super.key,
     required this.courseModel,
     this.onCourseRemoved,
+    this.onDeleteCourse,
   });
 
   @override
@@ -67,7 +73,23 @@ class ETCourseBox extends StatelessWidget {
                   child: ETPriceChip(
                     price: courseModel.price,
                   ),
-                )
+                ),
+                if (onDeleteCourse != null)
+                  Positioned(
+                    right: 8,
+                    top: 4,
+                    child: IconButton(
+                      // onPressed: () {
+                      //   onDeleteCourse!();
+                      // },
+                      onPressed: onDeleteCourse,
+                      // onPressed: () => onDeleteCourse!(),
+                      icon: Icon(
+                        Icons.delete,
+                        color: CustomColors.errorColor,
+                      ),
+                    ),
+                  )
               ],
             ),
             Padding(
