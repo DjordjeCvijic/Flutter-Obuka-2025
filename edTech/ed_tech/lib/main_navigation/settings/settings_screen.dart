@@ -27,12 +27,6 @@ class SettingsScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Gap(4),
-          Text(
-            "Settings screen",
-            style:
-                ownTheme(context).heading4!.copyWith(color: CustomColors.dark),
-          ),
           Gap(20),
           Image.asset(CustomImages.settingsScreenImg),
           Padding(

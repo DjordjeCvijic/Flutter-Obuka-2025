@@ -8,8 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import '../auth/login/login_provider.dart';
+import '../auth/login/login_screen.dart';
 import '../helpers/custom_colors.dart';
 import '../helpers/custom_icons.dart';
+import '../helpers/custom_themes.dart';
+import '../services/user_service.dart';
 
 class MainNavigation extends StatelessWidget {
   const MainNavigation({super.key});
@@ -31,8 +35,24 @@ class MainNavigation extends StatelessWidget {
       )
     ];
 
+    String getAppBarTitle() {
+      String appBarTitle = "";
+      if (provider.currentIndex == 0) {
+        appBarTitle = "Hello,";
+      } else if (provider.currentIndex == 1) {
+        appBarTitle = "Profile";
+      } else {
+        appBarTitle = "Settings screen";
+      }
+      return appBarTitle;
+    }
+
     return Consumer<MainNavigationProvider>(
       builder: (context, value, child) => Scaffold(
+        appBar: AppBar(
+          title: Text(getAppBarTitle()),
+          centerTitle: provider.currentIndex != 0,
+        ),
         body: SafeArea(
           child: screens.elementAt(provider.currentIndex),
         ),
@@ -88,6 +108,74 @@ class MainNavigation extends StatelessWidget {
                         : null,
                   ),
                   label: "Settings",
+                ),
+              ],
+            ),
+          ),
+        ),
+        drawer: Drawer(
+          width: MediaQuery.sizeOf(context).width * 0.5,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text(
+                    'Courses',
+                    style: ownTheme(context).heading4!.copyWith(
+                        color: provider.currentIndex == 0
+                            ? CustomColors.primary
+                            : null),
+                  ),
+                  onTap: () {
+                    provider.refreshScreen(0);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  title: Text(
+                    'Profile',
+                    style: ownTheme(context).heading4!.copyWith(
+                        color: provider.currentIndex == 1
+                            ? CustomColors.primary
+                            : null),
+                  ),
+                  onTap: () {
+                    provider.refreshScreen(1);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  title: Text(
+                    'Settings',
+                    style: ownTheme(context).heading4!.copyWith(
+                        color: provider.currentIndex == 2
+                            ? CustomColors.primary
+                            : null),
+                  ),
+                  onTap: () {
+                    provider.refreshScreen(2);
+                    Navigator.of(context).pop();
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  title: Text(
+                    'Log out',
+                    style: ownTheme(context).pLarge,
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    UserService.setUserLoggedIn(false);
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => ChangeNotifierProvider(
+                          create: (context) => LoginProvider(),
+                          child: LoginScreen(),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

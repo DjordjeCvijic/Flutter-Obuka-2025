@@ -4,6 +4,15 @@
         android:label="ed_tech"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+        android:name="com.google.firebase.messaging.default_notification_channel_id"
+        android:value="ed_tech"
+            />
+        <meta-data
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:value="@drawable/notification_ic"
+        />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

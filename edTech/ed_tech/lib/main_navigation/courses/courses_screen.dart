@@ -34,12 +34,6 @@ class CoursesScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "Hello,",
-                      style: ownTheme(context)
-                          .pLarge!
-                          .copyWith(color: CustomColors.dark),
-                    ),
-                    Text(
                       mainProvider.loggedUser.name,
                       style: ownTheme(context)
                           .heading3!
@@ -51,7 +45,9 @@ class CoursesScreen extends StatelessWidget {
               ETCircleButton(
                 padding: 12,
                 iconPath: CustomIcons.notificationIcon,
-                onTap: () {},
+                onTap: () {
+                  Scaffold.of(context).openDrawer();
+                },
               )
             ],
           ),

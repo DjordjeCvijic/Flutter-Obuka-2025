@@ -11,7 +11,7 @@ import '../helpers/global_const.dart';
 class UserService {
   static Future<List<UserModel>> fetchUsersFromFirebase() async {
     List<UserModel> userList = [];
-    String url = GlobalConst.firebaseURL + GlobalConst.userNode;
+    String url = FirebaseConst.firebaseURL + FirebaseConst.userNode;
 
     Response response = await http.get(Uri.parse(url));
 
@@ -28,7 +28,7 @@ class UserService {
 
   static Future<bool> saveUserDataOnFirebase(
       {required UserModel userData}) async {
-    String url = GlobalConst.firebaseURL + GlobalConst.userNode;
+    String url = FirebaseConst.firebaseURL + FirebaseConst.userNode;
     Response response = await http.post(
       Uri.parse(url),
       body: jsonEncode(
@@ -43,7 +43,7 @@ class UserService {
     required String userId,
     required String newName,
   }) async {
-    String url = "${GlobalConst.firebaseURL}/user/$userId.json";
+    String url = "${FirebaseConst.firebaseURL}/user/$userId.json";
     Response response = await http.patch(
       Uri.parse(url),
       body: jsonEncode(
@@ -66,7 +66,7 @@ class UserService {
     try {
       DateTime nowDateTime = DateTime.now();
 
-      String url = "${GlobalConst.firebaseURL}/user/$userId.json";
+      String url = "${FirebaseConst.firebaseURL}/user/$userId.json";
       Response response = await http.patch(
         Uri.parse(url),
         body: jsonEncode(
@@ -91,7 +91,7 @@ class UserService {
     required String userId,
     required List<String> listToSave,
   }) async {
-    String url = "${GlobalConst.firebaseURL}/user/$userId.json";
+    String url = "${FirebaseConst.firebaseURL}/user/$userId.json";
     Response response = await http.patch(
       Uri.parse(url),
       body: jsonEncode(

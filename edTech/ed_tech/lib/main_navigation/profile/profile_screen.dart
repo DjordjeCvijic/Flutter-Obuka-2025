@@ -23,12 +23,6 @@ class ProfileScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Gap(4),
-          Text(
-            "Profile",
-            style:
-                ownTheme(context).heading4!.copyWith(color: CustomColors.dark),
-          ),
           Gap(32),
           Column(
             spacing: 16,

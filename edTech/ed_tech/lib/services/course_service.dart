@@ -11,7 +11,7 @@ class CourseService {
     required CourseModel courseModel,
   }) async {
     try {
-      String url = GlobalConst.firebaseURL + GlobalConst.courseNode;
+      String url = FirebaseConst.firebaseURL + FirebaseConst.courseNode;
       Response response = await http.post(
         Uri.parse(url),
         body: jsonEncode(
@@ -28,7 +28,7 @@ class CourseService {
 
   static Future<List<CourseModel>> fetchAllCorsesFromFirebase() async {
     List<CourseModel> courseList = [];
-    String url = GlobalConst.firebaseURL + GlobalConst.courseNode;
+    String url = FirebaseConst.firebaseURL + FirebaseConst.courseNode;
 
     Response response = await http.get(Uri.parse(url));
 
@@ -46,7 +46,7 @@ class CourseService {
   static Future<bool> deleteCourseFromFirebase({
     required String courseId,
   }) async {
-    String url = "${GlobalConst.firebaseURL}/course/$courseId.json";
+    String url = "${FirebaseConst.firebaseURL}/course/$courseId.json";
 
     Response response = await http.delete(Uri.parse(url));
 

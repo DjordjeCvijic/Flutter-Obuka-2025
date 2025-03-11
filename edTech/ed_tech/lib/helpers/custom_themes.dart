@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class CustomThemes {
   static ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.amber,
+      toolbarHeight: 30,
     ),
     textTheme: TextTheme(
       titleMedium: TextStyle(
